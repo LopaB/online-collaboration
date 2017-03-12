@@ -1,0 +1,22 @@
+{
+  "name": "bower.jason",
+  "homepage": "https://github.com/LopaB/online-collaboration",
+  "authors": [
+    "LopaB <lopamudra.bera@hotmail.com>"
+  ],
+  "description": "This is my Online Collaboration Application",
+  "main": "index.html",
+  "keywords": [
+    "online",
+    "collaboration",
+    "social",
+    "platform"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.6.3",
+    "angular-route": "^1.6.3"
+  }
+}
