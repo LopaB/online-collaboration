@@ -1,2 +1,0 @@
-INDEX VERSION 1.129+E:\DevOps\Project2\online-collaboration\.metadata\.plugins\org.eclipse.jdt.core
-3186695781.index
