@@ -1,0 +1,54 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import static org.junit.Assert.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Blog;
+
+
+public class BlogDAOTestCase {
+	private static AnnotationConfigApplicationContext context;
+	private static IBlogDAO blogDAO;
+	private static IUserDAO userDAO;
+	private Blog blog;
+	//User user;
+	
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		blogDAO=(IBlogDAO)context.getBean("blogDAO");
+		userDAO=(IUserDAO)context.getBean("userDAO");
+	}
+	
+
+	/*@Test
+	public void testAddBlog(){
+		blog=new Blog();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+		blog.setBlogId(1);
+		blog.setBlogTitle("MyBlog");
+		blog.setBlogContent("Blog Content");
+		blog.setUser(userDAO.getUser(1));
+		try{
+		blog.setBlogPosted(dateFormat.parse("31/05/2017"));
+		}
+		catch(ParseException pe){
+			System.out.println(pe);
+		}
+		assertEquals("Successfully added a blog inside the table!", true, blogDAO.addBlog(blog));
+	}*/
+	
+}

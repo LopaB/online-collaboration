@@ -1,0 +1,82 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import static org.junit.Assert.*;
+
+import java.time.LocalDate;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+public class UserDAOTestCase {
+	private static AnnotationConfigApplicationContext context;
+	private static IUserDAO userDAO;
+	private static User user;
+	
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		userDAO=(IUserDAO)context.getBean("userDAO");
+		user = (User) context.getBean("user");
+		
+	}
+	
+	/*@Test
+	public void testAddUser(){
+		
+		user.setUserId(1);
+		user.setFullname("Lopamudra Bera");
+		user.setUsername("LopaB");
+		user.setPassword("lopab");
+		user.setConfirmpassword("lopab");
+		user.setEmail("pinkfriend@gmail.com");
+		user.setBirthdate(LocalDate.parse("1978-08-26"));
+		user.setGender('F');
+		user.setRole("SUPERADMIN");
+		user.setStatus("APPROVED");
+		user.setEnabled(true);
+		user.setOnline(true);
+		user.setProfile("noDP.png");
+		assertEquals("Successfully added a user inside the table!", true, userDAO.addUser(user));
+	}*/
+
+	/*@Test
+	public void testGetUser(){
+		user=userDAO.getUser(22);
+		assertEquals("Successfully retrieved a user from the table!", "LopaB", user.getUsername());
+	}*/
+	
+	@Test
+	public void testUpdateUser(){
+		user = userDAO.getUserByUserName("lopab");
+		user.setRole("ADMIN");		
+		assertEquals("Successfully updated a user inside the table!", true, userDAO.updateUser(user));
+	
+	}
+	
+//	@Test
+//	public void testDeleteUser() {
+//	user = userDAO.getUser();
+//	Assert.assertEquals("Successfully deleted a user inside the table!",true, userDAO.deleteUser(user));
+//}
+//
+//@Test
+//public void testGetAllUser() {
+//	
+//	int size = userDAO.list("APPROVED").size();
+//	Assert.assertEquals(9, size);
+//}
+
+/*@Test
+public void testMyOnlineFriends() {
+	List<User> users = userDAO.fetchOnlineFriends(29);
+	Assert.assertEquals("Test failed!", 2, users.size());
+}*/
+
+}

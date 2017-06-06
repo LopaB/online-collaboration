@@ -1,0 +1,57 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#!/viewUsers" role="tab" data-target="#view" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> View Users</a></li>
+                        <li><a href="#!/requests/users" role="tab" data-target="#activate" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" ></span> Activate Users</a></li>
+                        <li><a href="#!/requests/blogs" role="tab" data-target="#activateBlog" data-toggle="tab"><span class=""></span> Activate Blog</a></li>
+                        <li><a href="#!/myFriends" role="tab" data-target="#friend" data-toggle="tab"><span class=""></span> My Friends</a></li>
+                        <li><a href="#!/friendRequest" role="tab" data-target="#request" data-toggle="tab"><span class=""></span> Friend Request</a></li>
+                    </ul>
+                </div>
+            <!-- Tab panes -->
+            <div class="panel-body ">
+                <div class="tab-content ">
+                    
+
+                <div class="tab-pane active" id="view " ng-init="regCtrl.viewAll()">
+                    <div class=" ">
+                        <div class="row ">
+                            <div class="col-md-12 ">
+                                View Users here
+                                    
+                                <div class="well ">
+                                    <ul>
+                                        <li ng-repeat="user in regCtrl.users">
+                                    <div class="media ">
+      	                                
+  		                                <div class="media-body ">
+    		                                <h4 class="media-heading ">{{user.username}}</h4>
+                                            <h3>{{user.fullname}}</h3>
+                                            <p class="text-left ">{{user.role}}</p>
+                                                                                      
+                                            <hr/>
+
+                                           
+                                           
+                                        </div>
+                                    </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+        </div>
+    </div>
+</div>
+    </div></div>

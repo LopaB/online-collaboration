@@ -1,0 +1,49 @@
+package com.coll.OnlineCollaborateBackEnd.implDao;
+
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Blog;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+@Repository("blogDAO")
+@Transactional
+public class BlogDAOImpl implements IBlogDAO{
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	@Override
+	public List<Blog> getAllBlogs() {
+		return sessionFactory.getCurrentSession().createQuery("from Blog", Blog.class).getResultList();
+		
+	}
+
+	@Override
+	public boolean addBlog(Blog b) {
+		try {
+			sessionFactory.getCurrentSession().save(b);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateBlog(Blog b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteBlog(int blogId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

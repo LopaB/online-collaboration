@@ -1,0 +1,30 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import static org.junit.Assert.*;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IFriendDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Friend;
+
+public class FriendDAOTestCase {
+	private static AnnotationConfigApplicationContext context;
+	private static IFriendDAO friendDAO;
+	private static Friend friend;
+	
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		friendDAO=(IFriendDAO)context.getBean("friendDAO");
+		friend = (Friend) context.getBean("friend");
+		
+	}
+	
+	
+	
+}

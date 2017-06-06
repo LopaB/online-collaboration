@@ -1,4 +1,75 @@
-<html>
-    <head></head>
-    <body>This is my first app</body>
+<html lang="en" ng-app="CollaborationApp">
+    <head>
+        <title></title>
+         <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="./bower_components/angularjs-datepicker/dist/angular-datepicker.min.css"/>
+
+         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+          
+        <!-- Loading the angular library -->
+        <script src="./bower_components/angular/angular.js"></script>
+        <script src="./bower_components/angular-route/angular-route.js"></script>
+        <script src="./bower_components/angular-cookies/angular-cookies.js"></script>
+        <script type="text/javascript" src="./bower_components/angular-stomp/sockjs.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-stomp/stomp.js"></script>
+        <script type="text/javascript" src="/bower_components/angular-stomp/lodash.js"></script>
+
+        <script src="./bower_components/jquery/dist/jquery.js"></script>
+        <script src="./bower_components/bootstrap/dist/js/bootstrap.js"></script> 
+
+        <!-- Loading the main module -->
+        <script src="./app/app.module.js"></script>
+        <script src="./app/app.route.js"></script>
+
+        <script src="./app/components/services/BasicServices.js"></script>
+        <script src="./app/components/controllers/BasicController.js"></script>
+
+        <script src="./app/components/services/RegisterServices.js"></script>
+        <script src="./app/components/controllers/RegisterController.js"></script>
+
+        <script src="./app/components/services/BlogService.js"></script>
+        <script src="./app/components/controllers/BlogController.js"></script>
+
+        <script src="./app/components/services/BlogCommentService.js"></script>
+        <script src="./app/components/controllers/BlogCommentController.js"></script>
+
+        <script src="./app/components/services/RequestService.js"></script>
+        <script src="./app/components/controllers/RequestController.js"></script>
+
+        <script src="./app/components/services/AdminServices.js"></script>
+        <script src="./app/components/controllers/AdminController.js"></script>
+
+        <script src="./app/components/services/FriendService.js"></script>
+        <script src="./app/components/controllers/FriendController.js"></script>
+
+        <script src="./app/components/services/UserService.js"></script>
+        <script src="./app/components/controllers/UserController.js"></script>
+
+        <script src="./app/components/services/ChatService.js"></script>
+        <script src="./app/components/controllers/ChatController.js"></script>
+        
+
+        <script src="./bower_components/angularjs-datepicker/dist/angular-datepicker.min.js"></script>
+        <!-- Loading custom stylesheet -->
+        <link rel="stylesheet" href="./assets/css/reg.css"/>
+        <link rel="stylesheet" href="./assets/css/chat.css"/>
+        
+
+        
+        
+    </head>
+    <body>
+         <header>
+
+            <div ng-include="'app/components/shared/navbar.html'"></div>
+         </header>
+         <div class="">
+            <div ng-view></div>
+         </div>  
+         <footer class="footer">
+             <div ng-include="'app/components/shared/footer.html'"></div>
+         </footer> 
+  
+        
+    </body>
 </html>

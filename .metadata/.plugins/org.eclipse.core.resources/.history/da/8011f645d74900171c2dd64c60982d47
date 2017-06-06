@@ -1,0 +1,147 @@
+package com.coll.OnlineCollaborateBackEnd.implDao;
+
+import java.util.List;
+
+
+
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+@Repository("userDAO")
+@Transactional
+public class UserDAOImpl implements IUserDAO{
+
+	@Autowired
+	SessionFactory sessionFactory;
+
+	//Retrieving all users
+	@Override
+	public List<User> getAllUsers() {
+		return sessionFactory.getCurrentSession().createQuery("from UserDetail", User.class).getResultList();
+
+	}
+
+	//Retrieving single user based on userId
+	@Override
+	public User getUser(int userId) {
+		return sessionFactory.getCurrentSession().get(User.class,Integer.valueOf(userId));
+
+	}
+	
+	//Retrieving users based on status
+	@Override
+	public List<User> list(String status) {
+		String q = "FROM UserDetail where status = '" + status +"'";
+		Query query = sessionFactory.getCurrentSession().createQuery(q);
+		return query.getResultList();
+	}
+
+	//Retrieving single user based on username
+	@Override
+	public User getUserByUserName(String username) {
+		String selectUser="from UserDetail where username=:username";
+		return sessionFactory
+		.getCurrentSession()
+		.createQuery(selectUser, User.class)
+		.setParameter("username",username)
+		.getSingleResult();
+	}
+
+	@Override
+	public boolean addUser(User u) {
+		try {
+			sessionFactory.getCurrentSession().save(u);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateUser(User u) {
+		try {
+			sessionFactory.getCurrentSession().update(u);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean deleteUser(int userId) {
+		try {
+			sessionFactory.getCurrentSession().delete(getUser(userId));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	@Override
+	public User validateUser(User user) {
+		
+		String username = user.getUsername();
+		String password = user.getPassword();
+		
+		String hql = "FROM UserDetail where username = '" + username + "' and password = '" + password + "'";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		try {
+			user = (User) query.getSingleResult();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public boolean updateUserProfile(String fileName, Integer id) {
+		String updateQuery = "UPDATE User SET profile = :fileName WHERE id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(updateQuery);
+		query.setParameter("id", (Integer)id);
+		query.setParameter("fileName", fileName);
+		try {
+			query.executeUpdate();
+			return true;
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}	
+		return false;
+	}
+	
+	@Override
+	public List<User> fetchMyFriends(int id) {
+		String selectQuery = "SELECT * FROM USERDETAILS WHERE USER_ID IN (SELECT INITIATORID FROM FRIEND WHERE (FRIENDID = :id OR INITIATORID = :id) AND STATUS = 'APPROVED' UNION SELECT FRIENDID FROM FRIEND WHERE (FRIENDID = :id OR INITIATORID = :id) AND STATUS = 'APPROVED') AND IS_ONLINE in (0,1)";
+		
+		return sessionFactory
+				.getCurrentSession()
+					.createNativeQuery(selectQuery,User.class)
+						.setParameter("id", id)
+							.getResultList();
+	}
+
+	@Override
+	public List<User> fetchOnlineFriends(int id) {
+		String selectQuery = "SELECT * FROM USERDETAILS WHERE USER_ID IN (SELECT INITIATORID FROM FRIEND WHERE (FRIENDID = :id OR INITIATORID = :id) AND STATUS = 'APPROVED' UNION SELECT FRIENDID FROM FRIEND WHERE (FRIENDID = :id OR INITIATORID = :id) AND STATUS = 'APPROVED') AND IS_ONLINE = 1";
+		
+		return sessionFactory
+				.getCurrentSession()
+					.createNativeQuery(selectQuery,User.class)
+						.setParameter("id", id)
+							.getResultList();
+	}
+}

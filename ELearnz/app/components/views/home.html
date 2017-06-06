@@ -1,0 +1,151 @@
+<div class="container">
+    <div class="row" style="border: 2px solid darkblue;border-radius: 2px">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Get started with your Collaboration World</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3" >
+                    <div class="thumbnail">
+                        <img src="./assets/images/blog.jpg" alt="" >
+                        <div class="caption">
+                            <h3>Blog</h3>
+                            <p></p>
+                            <p>
+                                <a href="#!/blog" class="btn btn-primary">Visit Your Blog Page</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" >
+                    <div class="thumbnail">
+                        <img src="./assets/images/forum.png" alt="">
+                        <div class="caption">
+                            <h3>Forum</h3>
+                            <p></p>
+                            <p>
+                                <a href="#!/forum" class="btn btn-primary">Visit Your Forum Page</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" >
+                    <div class="thumbnail">
+                        <img src="./assets/images/profile.jpg" alt="" style="border-radius: 45px">
+                        <div class="caption">
+                            <h3>Profile</h3>
+                            <p></p>
+                            <p>
+                                <a href="#!/profile" class="btn btn-primary">Visit Your Profile Page</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" >
+                    <div class="thumbnail">
+                        <img src="./assets/images/friend.jpg" alt="" style="border-radius: 45px">
+                        <div class="caption">
+                            <h3>Friends</h3>
+                            <p></p>
+                            <p>
+                                <a href="#!/member/list" class="btn btn-primary">Visit Your Friend Page</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="row" style="background-color: #DCDCDC; height: 10%">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>All Friends</h2>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="thumbnail">
+                                <div>
+                                    <h2>Meet Your Firends...</h2>
+                                    <!--User's Friendlist is shown here-->
+                                    <div  ng-init="userCtrl.fetchMyFriends()">
+                                        <div class="row" >
+                                            <div class="col-md-12" >
+                                                <div style="border:1px solid brown; border-radius: 5px;padding:10 ">
+                                                <span >Friends (Total {{userCtrl.friendsCount}})</span>
+                                                </div>
+                                            </div>
+                                           <!-- <div class="col-md-4">
+                                                <a href="#">View All</a>
+                                            </div>
+                                            -->
+                                        </div>
+                                        <br/>
+                                        <div class="row" >
+                                            <div class="col-md-12">
+                                                <div style="border:1px solid brown; border-radius: 5px;">
+                                                <ul class="collection">
+                                                    <li class="collection-item" ng-repeat="friend in userCtrl.myFriends" >
+                                                    <!-- <img src="assets/img/{{friend.profile}}" alt="" class="circle"> -->
+                                                     <span><a href="#!/user/profile/{{friend.userId}}" style="color:black">{{friend.username}}</a></span>
+                                                  
+                                                   
+                                                    <hr/>
+                                                    </li>                                                
+                                                </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="thumbnail">
+                                <div>
+                                    <h2>Online Friends ...</h2>
+                                    
+                                    <!--User's Friendlist is shown here-->
+                                    <div  ng-init="userCtrl.fetchOnlineFriends()">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div style="border:1px solid brown; border-radius: 5px;padding:10 ">
+                                                    <span>Friends (Total {{userCtrl.countOnlineFriends}})<a></a></span>
+                                                </div>
+                                            </div>
+                                        <!--    <div class="col-md-4">
+                                                <a href="#">View All</a>
+                                            </div> -->
+                                        </div>
+                                        <br/>
+                                        <div class="row" >
+                                            <div class="col-md-12">
+                                                <div style="border:1px solid brown; border-radius: 5px;">
+                                                    <ul class="collection">
+                                                        <li class="collection-item" ng-repeat="friend in userCtrl.myOnlineFriends">
+                                                            <!-- <img src="assets/img/{{friend.profile}}" alt="" class="circle"> -->
+                                                            <span><a href="#!/user/profile/{{friend.userId}}" style="color:black">{{friend.username}}</a></span>
+                                                            <a href="#!/chat/{{friend.userId}}/{{friend.username}}"  ><i class="">Chat</i></a>
+                                                        <hr/>
+                                                        </li>                                                
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        
+   

@@ -1,0 +1,41 @@
+.chat-window {
+    position: relative;
+    top: 50;
+    max-height: 100%;
+    height: auto;
+    width: 920px;
+    border: 2px solid tomato;
+    border-radius: 5px;
+    padding-left:20px;
+    padding-right:20px;
+}
+
+
+.chat-window.minimized {
+    height: 40px;
+}
+
+.chat-top-bar {
+    height: 40px;
+}
+
+.chat-bottom-bar {
+    height: 110px;
+}
+
+.msg-container-base {
+    height: auto;
+    max-height: 1500px;
+}
+
+.panel-body {
+    padding-top: 10;
+    padding-bottom:20;
+}
+
+.chat-container {
+    width: 800px;
+    height: 100%;
+    //margin: 0 auto;
+}
+   body {overflow-x: hidden;}

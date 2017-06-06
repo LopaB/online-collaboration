@@ -1,5 +1,0 @@
-package com.coll.OnlineCollaborateBackEnd.config;
-
-public class MvcConfig {
-
-}

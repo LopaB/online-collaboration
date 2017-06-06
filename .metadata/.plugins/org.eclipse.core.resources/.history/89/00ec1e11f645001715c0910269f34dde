@@ -1,0 +1,44 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import static org.junit.Assert.*;
+
+import java.util.Date;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Blog;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+public class BlogDAOTestCase {
+	private static AnnotationConfigApplicationContext context;
+	private static IBlogDAO blogDAO;
+	private static IUserDAO userDAO;
+	Blog blog;
+	//User user;
+	
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		blogDAO=(IBlogDAO)context.getBean("blogDAO");
+	}
+	
+	@Test
+	public void testAddBlog(){
+		blog.setBlogId(1);
+		blog.setBlogTitle("MyBlog");
+		blog.setCategory("General");
+		blog.setBlogContent("Blog Content");
+		blog.setBlogDescription("blogDescription");
+		blog.setUser(userDAO.getUser(1));
+		blog.setBlogPosted(new Date("31/05/2017"));
+		assertEquals("Successfully added a blog inside the table!", true, blogDAO.addBlog(blog));
+	}
+	
+}

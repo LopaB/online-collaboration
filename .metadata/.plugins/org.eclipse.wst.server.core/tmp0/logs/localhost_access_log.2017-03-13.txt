@@ -1,0 +1,9 @@
+127.0.0.1 - - [13/Mar/2017:10:51:58 +0530] "GET / HTTP/1.1" 404 988
+0:0:0:0:0:0:0:1 - - [13/Mar/2017:10:52:06 +0530] "GET /Online-Collaborate/ HTTP/1.1" 200 57
+127.0.0.1 - - [13/Mar/2017:11:10:15 +0530] "GET / HTTP/1.1" 404 988
+0:0:0:0:0:0:0:1 - - [13/Mar/2017:11:10:20 +0530] "GET /Online-Collaboration/greeting HTTP/1.1" 404 1046
+127.0.0.1 - - [13/Mar/2017:11:23:37 +0530] "GET / HTTP/1.1" 404 988
+0:0:0:0:0:0:0:1 - - [13/Mar/2017:11:24:00 +0530] "GET /Online-Collaboration/greeting HTTP/1.1" 404 1046
+0:0:0:0:0:0:0:1 - - [13/Mar/2017:11:24:43 +0530] "GET /Online-Collaborate/greeting HTTP/1.1" 200 86
+0:0:0:0:0:0:0:1 - - [13/Mar/2017:11:28:34 +0530] "GET /Online-Collaborate/greeting HTTP/1.1" 200 86
+0:0:0:0:0:0:0:1 - - [13/Mar/2017:11:28:50 +0530] "GET /Online-Collaborate/greeting HTTP/1.1" 200 86

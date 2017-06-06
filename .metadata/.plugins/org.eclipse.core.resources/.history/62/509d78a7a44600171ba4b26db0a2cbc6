@@ -1,0 +1,104 @@
+package com.coll.OnlineCollaborateBackEnd.implDao;
+
+import java.util.List;
+
+
+
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+@Repository("userDAO")
+@Transactional
+public class UserDAOImpl implements IUserDAO{
+
+	@Autowired
+	SessionFactory sessionFactory;
+
+	@Override
+	public List<User> getAllUsers() {
+		return sessionFactory.getCurrentSession().createQuery("from UserDetail", User.class).getResultList();
+
+	}
+
+	@Override
+	public User getUser(int userId) {
+		return sessionFactory.getCurrentSession().get(User.class,Integer.valueOf(userId));
+
+	}
+
+	@Override
+	public User getUserByUserName(String username) {
+		String selectUser="from UserDetail where username=:username";
+		return sessionFactory
+		.getCurrentSession()
+		.createQuery(selectUser, User.class)
+		.setParameter("username",username)
+		.getSingleResult();
+	}
+
+	@Override
+	public boolean addUser(User u) {
+		try {
+			sessionFactory.getCurrentSession().persist(u);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateUser(User u) {
+		try {
+			sessionFactory.getCurrentSession().update(u);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean deleteUser(int userId) {
+		try {
+			sessionFactory.getCurrentSession().delete(getUser(userId));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	public List<User> listUserForActivation() {		
+		String selectQuery = "FROM UserDetail WHERE status = :status";
+		Query query = sessionFactory.getCurrentSession().createQuery(selectQuery);
+		query.setParameter("status", "PENDING");		
+		return query.list();
+	}
+	
+	public User approveUser(Long id) {		
+		String updateQuery = "UPDATE UserDetail SET status = :status, enabled = :enabled WHERE userid = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(updateQuery);
+		query.setParameter("userid", id);
+		query.setParameter("status", "APPROVED");
+		query.setParameter("enabled", true);		
+		try {
+			query.executeUpdate();
+			return this.getUser(id);			
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}	
+		return null;
+	}
+
+}

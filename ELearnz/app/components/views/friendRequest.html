@@ -1,0 +1,54 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ><a href="#!/member/list" role="tab" data-target="#view" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> View Active Users</a></li>
+                        <li class="active"><a href="#!/friendRequest" role="tab" data-target="#request" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Approve Friend Request</a></li>
+                        <li><a href="#!/allFriend" role="tab" data-target="#friend" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> All Friends</a></li>
+                    </ul>
+                </div>
+                <!-- Tab panes -->
+                <div class="panel-body ">
+                    <div class="tab-content ">              
+                        <div class="tab-pane active" id="request ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="margin-left: 25px;" ng-init="friendCtrl.fetchRequest()">
+                                        <h5>YOU HAVE {{friendCtrl.friendrequestcount}} NEW FRIEND REQUESTS</h5>
+                                    </div>
+                                    <br />
+                                    <hr style="width: 1300px;" >
+
+                                    <div>
+                                            <div class="row">
+                                                <div class="col s3" ng-repeat="friend in friendCtrl.friendrequest">
+                                                    <div class="card" >
+                                                        <div class="row">
+                                                            <div class="col s3" style="margin-top: 10px;">
+                                                             <!--   <img src="assets/img/{{friend.profile}}" alt="" class="square" width="120px;" height="120px;"> -->
+                                                            </div>
+                                                            <div class="col s7 offset-s2" style="margin-top: 10px; margin-bottom: 10px;">
+                                                                <b><a href="" style="color: #000;">{{friend.fullname}}</a></b> <!--#!/user/profile/user.id -->
+                                                                <p style="margin-top: 0px; margin-bottom: 0px;">{{friend.username}}</p>
+                                                                
+                                                                <p ng-if="friend.gender == 'M'" style="margin-top: 0px; margin-bottom: 0px;">Male</p>
+                                                                <p ng-if="friend.gender == 'F'" style="margin-top: 0px; margin-bottom: 0px;">Female</p>
+                                                            </div>
+                                                        </div>
+                                                        <div style="margin-top: 10px; margin-left: 10px; padding-bottom: 10px;">
+                                                                <button class=" btn" ng-click="friendCtrl.approveRequest(friend.userId)">APPROVE</button>
+                                                                <button class="btn" ng-click="friendCtrl.sendRequest(user.userId)" style="margin-top: 5px;">REJECT</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                
+                                            
+                                                
+                                            </div>
+                                        </div>
+                                </div></div></div></div></div></div></div></div></div>

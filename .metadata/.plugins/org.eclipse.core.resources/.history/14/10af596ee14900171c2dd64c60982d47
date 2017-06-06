@@ -1,0 +1,11 @@
+package com.coll.OnlineCollaborateBackEnd.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableWebSocketMessageBroker
+@ComponentScan(basePackages={"com.coll.OnlineCollaborateBackEnd"})
+public class WebSocketChatConfig {
+
+}

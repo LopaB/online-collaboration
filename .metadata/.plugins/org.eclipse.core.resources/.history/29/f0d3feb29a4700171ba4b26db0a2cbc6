@@ -1,0 +1,10 @@
+package com.coll.OnlineCollaborateBackEnd.dao;
+
+public interface IBlogCommentsDAO {
+
+	List<BlogComments> list(int id);
+	BlogComments getBlogComments(int id);
+	boolean addBlogComments(BlogComments blogComments);
+	boolean updateBlogComments(BlogComments blogComments);
+	boolean deleteBlogComments(BlogComments blogComments);
+}

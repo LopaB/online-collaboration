@@ -1,0 +1,48 @@
+package com.coll.OnlineCollaborateBackEnd.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Blog;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+
+@RestController
+@CrossOrigin(origins="http://localhost:8887")
+@RequestMapping("/blog")
+public class BlogController {
+	@Autowired
+	IBlogDAO blogDAO;
+	@Autowired 
+	IUserDAO userDAO;
+	@GetMapping(value="/view")
+	public ResponseEntity<Blog> getAllBlogs()
+    {
+          return new ResponseEntity(blogDAO.getAllBlogs(),HttpStatus.OK);
+    }
+	
+	//Adding Blog
+		@PostMapping(value="/add/{userid}")
+		public ResponseEntity<Blog> addBlog(@RequestBody Blog blog,@PathVariable("userid") int id){
+			blog.setUser(userDAO.getUser(id));
+			
+			if(blogDAO.addBlog(blog)) {
+				System.out.println(blog);
+				//blog.setResponseMessage("You have successfully posted data to the server");
+				return new ResponseEntity<Blog>(blog,HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<Blog>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+}
