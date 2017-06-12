@@ -1,0 +1,70 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.time.LocalDate;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IForumDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IForumPostDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Forum;
+import com.coll.OnlineCollaborateBackEnd.model.ForumPost;
+public class ForumPostDAOTestCase {
+	
+	private static AnnotationConfigApplicationContext context;
+	private static IForumDAO forumDAO;
+	private static Forum forum;
+	private static IForumPostDAO forumPostDAO;
+	private static ForumPost forumPost;
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		forumDAO=(IForumDAO)context.getBean("forumDAO");
+		forum=(Forum)context.getBean("forum");
+		forumPostDAO=(IForumPostDAO)context.getBean("forumPostDAO");
+		forumPost=(ForumPost)context.getBean("forumPost");
+	}
+	
+	@Test
+	public void addForumPost() {
+		forumPost.setId(1);
+		forumPost.setUsername("Veenam");
+		forumPost.setUserId(27);
+		forumPost.setTitle("Post Title");
+		forumPost.setDescription("This is a  first forum post");
+		forum = forumDAO.getForum(1);
+		forumPost.setForum(forum);
+		forumPost.setNoOfPosts(1);
+		forumPost.setPostDate(LocalDate.parse("2017-06-07"));
+		
+		
+		assertEquals(true, forumPostDAO.addForumPost(forumPost));
+	}
+	
+	/*@Test
+	public void updateForumPostTestCase() {
+		forumPost = forumPostDAO.getForumPost(1);
+		forumPost.setUserId(102);
+		assertEquals(true, forumPostDAO.updateForumPost(forumPost));
+	}*/
+	
+	/*@Test
+	public void getAllForumPostTestCase() {
+		
+		int size = forumPostDAO.list().size();
+		assertEquals(1, size);
+	}*/
+	
+	/*@Test
+	public void deleteForumPostTestCase() {
+		forumPost = forumPostDAO.getForumPost(3);
+		assertEquals(true, forumPostDAO.deleteForumPost(forumPost));
+	}*/
+	
+}

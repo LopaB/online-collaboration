@@ -1,0 +1,34 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IJobAppliedDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IJobDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Job;
+import com.coll.OnlineCollaborateBackEnd.model.JobApplied;
+
+public class JobDAOTestCase {
+	
+	private static AnnotationConfigApplicationContext context;
+	private static IJobDAO jobDAO;
+	private static Job job;
+	private static IJobAppliedDAO jobAppliedDAO;
+	private static JobApplied jobApplied;
+
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		jobDAO=(IJobDAO)context.getBean("jobDAO");
+		job=(Job)context.getBean("job");
+		jobAppliedDAO=(IJobAppliedDAO)context.getBean("jobAppliedDAO");
+		jobApplied=(JobApplied)context.getBean("jobApplied");
+	}
+	
+	
+}

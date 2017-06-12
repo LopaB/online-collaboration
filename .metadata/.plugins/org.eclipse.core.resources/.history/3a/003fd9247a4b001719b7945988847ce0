@@ -1,0 +1,33 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IForumDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IForumPostDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Forum;
+import com.coll.OnlineCollaborateBackEnd.model.ForumPost;
+public class ForumPostDAOTestCase {
+	
+	private static AnnotationConfigApplicationContext context;
+	private static IForumDAO forumDAO;
+	private static Forum forum;
+	private static IForumPostDAO forumPostDAO;
+	private static ForumPost forumPost;
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		forumDAO=(IForumDAO)context.getBean("forumDAO");
+		forum=(Forum)context.getBean("forum");
+		forumPostDAO=(IForumPostDAO)context.getBean("forumPostDAO");
+		forumPost=(ForumPost)context.getBean("forumPost");
+	}
+	
+	
+	
+}

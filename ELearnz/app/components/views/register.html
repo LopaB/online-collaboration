@@ -43,10 +43,10 @@
 									<input type="text" ng-model="regCtrl.user.username" class="form-control validate" ng-minlength="3" ng-maxlength="10" name="username" id="username"  placeholder="Enter Username"  data-length="10" ng-blur="regCtrl.checkUsername()" ng-required="true"/>
 								</div>
 								<div class="invalid-data" ng-show="register.username.$dirty">
-                    				<span ng-show="regCtrl.usernameExist" class="help-block">Username is already taken</span>
-                    				<span ng-show="register.username.$error.required && !register.username.$pristine" class="help-block">Username is mandatory</span>
-                    				<span ng-show="register.username.$error.minlength" class="help-block">Username must be of at least 3 characters</span>
-                    				<span ng-show="register.username.$error.maxlength" class="help-block">Username is too long</span>
+                    				<span style="color:red" ng-show="regCtrl.usernameExist" class="help-block">Username is already taken</span>
+                    				<span style="color:red" ng-show="register.username.$error.required && !register.username.$pristine" class="help-block">Username is mandatory</span>
+                    				<span style="color:red" ng-show="register.username.$error.minlength" class="help-block">Username must be of at least 3 characters</span>
+                    				<span style="color:red" ng-show="register.username.$error.maxlength" class="help-block">Username is too long</span>
                   				</div>
 							</div>
 						</div>
@@ -61,9 +61,9 @@
 									<input type="password" ng-model="regCtrl.user.password" class="form-control validate" ng-minlength="4" ng-maxlength="10" name="password" id="password"  placeholder="Enter Password" data-length="10" ng-required="true"/>
 								</div>
 								<div class="invalid-data" ng-show="register.password.$dirty">
-                    				<p ng-show="register.password.$error.required && !register.password.$pristine" class="help-block">password is mandatory</p>
-                    				<p ng-show="register.password.$error.minlength" class="help-block">password must be of at least 4 characters</p>
-                    				<p ng-show="register.password.$error.maxlength" class="help-block">password is too long</p>
+                    				<p style="color:red" ng-show="register.password.$error.required && !register.password.$pristine" class="help-block">password is mandatory</p>
+                    				<p style="color:red" ng-show="register.password.$error.minlength" class="help-block">password must be of at least 4 characters</p>
+                    				<p style="color:red" ng-show="register.password.$error.maxlength" class="help-block">password is too long</p>
                   				</div>
 							</div>
 						</div>
@@ -73,11 +73,11 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" ng-model="regCtrl.user.confirmpassword" class="form-control" name="confirmpassword" id="confirm"  placeholder="Confirm Password"  data-length="10" ng-required="true" ng-class="{ 'confirm_password' : (regCtrl.user.password !== regCtrl.user.confirmpassword)}"/>
+									<input type="password" ng-model="regCtrl.user.confirmpassword" class="form-control" name="confirmpassword" id="confirm"  placeholder="Confirm Password"  data-length="10" ng-required="true" ng-class="{ 'confirmpassword' : (regCtrl.user.password !== regCtrl.user.confirmpassword)}"/>
 								</div>
 								<div class="invalid-data" ng-show="register.reg_username.$dirty">
-        							<p ng-show="register.confirmpassword.$error.required && !register.confirmpassword.$pristine" class="help-block">password is mandatory</p>
-                    				<p ng-show="(!register.confirmpassword.$error.required) && (regCtrl.user.password !== regCtrl.user.confirmpassword)"
+        							<p style="color:red" ng-show="register.confirmpassword.$error.required && !register.confirmpassword.$pristine" class="help-block">password is mandatory</p>
+                    				<p style="color:red" ng-show="(!register.confirmpassword.$error.required) && (regCtrl.user.password !== regCtrl.user.confirmpassword)"
                       					class="help-block">Password do not match</p>
                   				</div>
 							</div>
@@ -92,9 +92,9 @@
 									
 								</div>
 								<div class="invalid-data" ng-show="register.fullname.$dirty">
-                    					<p ng-show="register.fullname.$error.required && !register.first_name.$pristine" class="help-block">first name is mandatory</p>
-                    					<p ng-show="register.fullname.$error.minlength" class="help-block">firstname must be of at least 2 characters</p>
-                    					<p ng-show="register.fullname.$error.maxlength" class="help-block">firstname is too long</p>
+                    					<p style="color:red" ng-show="register.fullname.$error.required && !register.first_name.$pristine" class="help-block">first name is mandatory</p>
+                    					<p style="color:red" ng-show="register.fullname.$error.minlength" class="help-block">firstname must be of at least 2 characters</p>
+                    					<p style="color:red" ng-show="register.fullname.$error.maxlength" class="help-block">firstname is too long</p>
                   				</div>
 							</div>
 						</div>
@@ -107,8 +107,8 @@
 									<input type="text" ng-model="regCtrl.user.email" class="form-control validate" name="email" id="email"  placeholder="Enter Email Id" data-length="50" ng-required="true"/>
 								</div>
 								<div class="invalid-data" ng-show="register.email.$dirty">
-                  					<p ng-show="register.email.$error.required && !register.email.$pristine" class="help-block">email is mandatory</p>
-                  					<p ng-show="register.email.$invalid && !register.email.$pristine" class="help-block">Enter a valid email</p>
+                  					<p style="color:red" ng-show="register.email.$error.required && !register.email.$pristine" class="help-block">email is mandatory</p>
+                  					<p style="color:red" ng-show="register.email.$invalid && !register.email.$pristine" class="help-block">Enter a valid email</p>
                 				</div>
 							</div>
 						</div>
@@ -138,7 +138,7 @@
 									<span class="input-group-addon" ><i class="fa fa-vcard-o fa" aria-hidden="true" ></i></span>
 									
 									<label class="radio-inline" style="padding-left:10% ;padding-top: 1% "><input type="radio" name="role" ng-model="regCtrl.user.role" value="ADMIN"/> ADMIN</label>
-									<label class="radio-inline" style="padding-left:10%;padding-top: 1% "><input type="radio" name="role" ng-model="regCtrl.user.role" value="USER" /> USER</label>
+									<label class="radio-inline" style="padding-left:10%;padding-top: 1% "><input type="radio" name="role" ng-model="regCtrl.user.role" value="USER" checked/> USER</label>
 									
 									
 									

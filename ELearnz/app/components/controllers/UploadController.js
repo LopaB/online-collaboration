@@ -8,16 +8,17 @@ angular.module('CollaborationApp').controller('UploadController',function(Upload
     me.picture = undefined;
 
     // the decached technique is used to see the updated image immediately with out page refresh
-    me.user.pictureId = me.user.pictureId + '?decached=' + Math.random(); 
+    me.user.profile =me.user.profile ; 
 
     // once the controller loads call the jQuery
-    $timeout(function () {
-        load();
-    }, 100);
+ //   $timeout(function () {
+   //     load();
+  //  }, 100);
 
     // to upload the file    
     me.uploadFile = function () {
-        
+        console.log("inside controller uploadfile method");
+        console.log(me.picture);
         if(me.picture == undefined) {
             return;
         }    
@@ -26,18 +27,13 @@ angular.module('CollaborationApp').controller('UploadController',function(Upload
         UploadService.uploadFile(me.picture)
         .then(
             function(response){
-                $rootScope.message = 'Profile picture updated successfully!';
+               // $rootScope.message = 'Profile picture updated successfully!';
                 //message contains the pictureId updated in the backend too
-                me.user.pictureId = response.message + '?decached=' + Math.random();
+                me.user.profile = response.message + '?decached=' + Math.random();
                 // update the controller user too
-                $rootScope.user.pictureId = response.message + '?decached=' + Math.random();
+                $rootScope.user.profile = response.message + '?decached=' + Math.random();
                 // need to update the cookie value too
                 RegisterService.saveUser($rootScope.user);
-
-                // hide the card panel by setting the rootScope.message as undefined
-                $timeout(function() {                    
-                    $rootScope.message = undefined;
-                },2000);
 
             },
             function(error){

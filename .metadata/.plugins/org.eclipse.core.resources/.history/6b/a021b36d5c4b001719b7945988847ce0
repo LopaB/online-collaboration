@@ -1,0 +1,10 @@
+package com.coll.OnlineCollaborateBackEnd.model;
+
+import java.io.Serializable;
+
+@Entity
+@Component
+@Table(name="FORUM")
+public class Forum implements Serializable{
+
+}

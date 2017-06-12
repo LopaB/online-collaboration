@@ -1,7 +1,0 @@
-package com.coll.OnlineCollaborateBackEnd.implDao;
-
-import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
-
-public class BlogDAOImpl implements IBlogDAO{
-
-}

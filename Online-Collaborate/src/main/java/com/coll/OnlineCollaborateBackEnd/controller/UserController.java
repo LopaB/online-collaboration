@@ -11,12 +11,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coll.OnlineCollaborateBackEnd.dao.IBlogDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IEventJoinedDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IEventsDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IForumDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IJobAppliedDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IJobDAO;
 import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Blog;
+import com.coll.OnlineCollaborateBackEnd.model.ContainModel;
+import com.coll.OnlineCollaborateBackEnd.model.EventJoined;
+import com.coll.OnlineCollaborateBackEnd.model.Events;
+import com.coll.OnlineCollaborateBackEnd.model.Forum;
+import com.coll.OnlineCollaborateBackEnd.model.Job;
+import com.coll.OnlineCollaborateBackEnd.model.JobApplied;
 import com.coll.OnlineCollaborateBackEnd.model.User;
+import com.coll.OnlineCollaborateBackEnd.model.UserModel;
 
 @RestController
 @CrossOrigin(origins="http://localhost:8887")
@@ -25,6 +39,26 @@ public class UserController {
 	
 	@Autowired
 	IUserDAO userDAO;
+	@Autowired
+	IEventsDAO eventsDAO;
+	@Autowired
+	IJobDAO jobDAO;
+	@Autowired
+	IBlogDAO blogDAO;
+	@Autowired
+	IEventJoinedDAO eventJoinedDAO;
+	@Autowired
+	IJobAppliedDAO jobAppliedDAO;
+	@Autowired
+	Job job;
+	@Autowired
+	JobApplied jobApplied;
+	@Autowired
+	EventJoined eventJoined;
+	@Autowired
+	Blog blog;
+	@Autowired
+	IForumDAO forumDAO;
 	
 	//Adding User(Registration)
 	@PostMapping(value="/user/add")
@@ -94,7 +128,7 @@ public class UserController {
 	
 	
 	//Retrieving all users
-	@GetMapping(value="/user/list")
+	@GetMapping(value={"/user/list"})
 	public ResponseEntity<List<User>> getAllUsers(){
 		List<User> user = userDAO.list("APPROVED");
 	    return new ResponseEntity<List<User>>(user,HttpStatus.OK);
@@ -132,8 +166,104 @@ public class UserController {
 				return new ResponseEntity<List<User>>(onlineFriends, HttpStatus.OK);
 			}
 
-	
-	
+			 //function to fetch user and user detail
+			@GetMapping(value = {"/user/{id}"})
+			public ResponseEntity<UserModel> fetchUser(@PathVariable("id") int id) {
+				
+				//Setting user inside model
+				UserModel userModel = new UserModel();
+				User user = userDAO.getUser(id);
+				userModel.setUser(user);
+				
+				//Setting list of events created by user inside model
+				List<EventJoined> events = eventJoinedDAO.list(id);
+				List<Events> eventlist=new ArrayList<>();
+				for(EventJoined e:events){
+					eventlist.add(e.getEvents());
+				}
+				userModel.setEvents(eventlist);
+				
+				
+				//Setting list of jobs created by user inside model
+				//List<Job> job = jobDAO.getUserJobs(id);
+				//userModel.setJob(job);
+				List<JobApplied> jobs = jobAppliedDAO.list(id);
+				List<Job> joblist=new ArrayList<>();
+				for(JobApplied j:jobs){
+					joblist.add(j.getJob());
+				}
+				userModel.setEvents(eventlist);
+				
+				//Settling list of blogs created by user inside model
+				List<Blog> blog = blogDAO.getUsersBlogs(id);
+				userModel.setBlog(blog);
+				
+				//Settling list of events user has joined inside model
+				List<EventJoined> eventJoined = eventJoinedDAO.list(id);
+				List<Events> joinedEvents = new ArrayList<>();
+				for (EventJoined ej : eventJoined) {
+					joinedEvents.add(ej.getEvents());
+				}
+				userModel.setJoinedEvents(joinedEvents);
+				
+				//Settling list of jobs user has applied for inside model
+				List<JobApplied> jobApplieds = jobAppliedDAO.list(id);
+				List<Job> appliedJobList = new ArrayList<>();
+				for (JobApplied ja : jobApplieds) {
+					appliedJobList.add(ja.getJob());
+				}
+				userModel.setAppliedJobList(appliedJobList);
+				
+				//Setting list of user's friends
+				
+				return new ResponseEntity<UserModel>(userModel, HttpStatus.OK);
+			}
+			
+			
+			  	//function to fetch main page contain
+				@GetMapping(value = {"/main/contain"})
+				public ResponseEntity<ContainModel> fetchContain() {
+					System.out.println("Fetching blogs");
+					ContainModel containModel = new ContainModel();
+					List<Blog> top5Blogs = blogDAO.mainList();
+					containModel.setTop5Blogs(top5Blogs);
+					
+					List<Forum> top3Forums = forumDAO.mainList();
+					containModel.setTop3Forums(top3Forums);
+					
+					List<Job> top3Jobs = jobDAO.mainList();
+					containModel.setTop3Jobs(top3Jobs);
+					
+					List<Events> top3Events = eventsDAO.mainList();
+					containModel.setTop3Events(top3Events);
+					return new ResponseEntity<ContainModel>(containModel, HttpStatus.OK);
+				}
+				//
+				@PostMapping(value="/user/update")
+				public ResponseEntity<User> update(@RequestBody User user){
+					// setting the value of status, enable, online, profile
+					
+					//user.setEnabled(true);
+					//user.setOnline(false);
+					//user.setProfile("noDp.png");
+					if(userDAO.updateUser(user)) {
+						//System.out.println(user);
+						user.setResponseMessage("You have successfully posted data to the server");
+						return new ResponseEntity<User>(user,HttpStatus.OK);
+					}
+					else {
+						return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				
+				@PostMapping(value = {"/user/delete/{id}"})
+				public ResponseEntity<User> delete(@PathVariable("id") int id) {
+					User user = null;
+					user = userDAO.getUser(id);
+					user.setStatus("DEACTIVATE");
+					userDAO.updateUser(user);
+					return new ResponseEntity<User>(user, HttpStatus.OK);	
+				}
 	
 
 }

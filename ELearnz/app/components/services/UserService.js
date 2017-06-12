@@ -1,4 +1,4 @@
-angular.module('CollaborationApp').service('UserService',function($http,$q,$rootScope,$cookies,$location,REST_URI){
+angular.module('CollaborationApp').service('UserService',function($http,$q,$rootScope,$cookies,$location,$routeParams,REST_URI){
 
     //fetch user's friends
         this.fetchMyFriends=function() {
@@ -56,5 +56,72 @@ angular.module('CollaborationApp').service('UserService',function($http,$q,$root
         );
         return deferred.promise;
     }
+
+     //Function to fetch user event list
+         
+         this.userEventList=function(id) {
+            console.log('Inside user service now');
+            var deferred = $q.defer();
+
+            $http.get(REST_URI + '/user/events/list/'+ id)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+        //function to fetch user and user detail
+        this.fetchUser=function(id) {
+             var deferred = $q.defer();
+
+              $http.get(REST_URI + '/user/'+ id)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+
+        }
+
+        //function to fetch main page contain
+        this.fetchContain=function() {
+             var deferred = $q.defer();
+
+              $http.get(REST_URI + '/main/contain')
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+        this.updateUser=function(user) {
+
+                var deferred = $q.defer();
+
+                $http.post(REST_URI + '/user/update', user).then(
+                    function(response) {
+                        //debugger;
+                        deferred.resolve(response.data);
+                    }, function(errResponse) {
+                        deferred.reject(response.data);
+                    }
+                );
+                return deferred.promise;
+            }
+
        
 });

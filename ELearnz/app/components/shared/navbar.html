@@ -7,27 +7,39 @@
     
     
         <ul class="nav navbar-nav">
-            <li class="active">
-                <a class="" href="#!/home">Home  <span class="sr-only"></span></a>
+            <li class="active" ng-if="user.role=='USER'">                
+                <a class="" href="#!/home" >Home  <span class="sr-only"></span></a>
+            </li>
+            <li class="active" ng-if="user.role=='ADMIN'">    
+                <a class="" href="#!/homeAdmin">Home  <span class="sr-only"></span></a>
             </li>
             <li class="">
                 <a class="" href="#!/blog">Blog</a>
             </li>
             <li class="">
-                <a class="" href="#!/forum">Forum</a>
+                <a class="" href="#!/forum/list">Forum</a>
             </li>
             <li class="">
                 <a class="" href="#!/edit/profile">Profile</a>
             </li>
             <li class="">
-                <a class="" href="#!/member/list">Friends</a>
+                <a class="" href="#!/jobs/list">Job</a>
+            </li>
+            <li class="">
+                <a class="" href="#!/events/list">Event</a>
+            </li>
+            <li class="" >
+                <a class="" href="#!/member/list">Friend</a>
+            </li>
+           <li class="" ng-if="user.role=='ADMIN'">
+                <a class="" href="#!/viewUsers" >Manage</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="">          
-                <div class="left-padding" >
-                    <h4>   {{message}}  </h4>    
-                </div>
+                
+                    <a>   {{message}}  </a>    
+                
             </li>
             <li class="">
                 <a class="" href="" ng-click="logout()">Logout</a>

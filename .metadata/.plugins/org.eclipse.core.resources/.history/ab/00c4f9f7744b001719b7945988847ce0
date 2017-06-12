@@ -1,0 +1,34 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IEventJoinedDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IEventsDAO;
+import com.coll.OnlineCollaborateBackEnd.model.EventJoined;
+import com.coll.OnlineCollaborateBackEnd.model.Events;
+
+public class EventJoinedDAOTestCase {
+	
+	private static AnnotationConfigApplicationContext context;
+	private static IEventsDAO eventsDAO;
+	private static Events events;
+	private static IEventJoinedDAO eventJoinedDAO;
+	private static EventJoined eventJoined;
+	
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		eventsDAO=(IEventsDAO)context.getBean("eventsDAO");
+		events=(Events)context.getBean("events");
+		eventJoinedDAO=(IEventJoinedDAO)context.getBean("eventJoinedDAO");
+		eventJoined=(EventJoined)context.getBean("eventJoined");
+	}
+	
+	
+}

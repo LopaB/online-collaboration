@@ -1,7 +1,7 @@
 angular.module('CollaborationApp').controller('BlogController',function(BlogService, BlogCommentService,RegisterService,$cookies,$rootScope, $route, $routeParams, $location){
 
   var me = this;
-me.user=[];
+me.user=$rootScope.user;
 me.blogId="";
   me.blog = {
 

@@ -59,7 +59,8 @@ public class BlogController {
 		public ResponseEntity<Blog> deleteBlog(@PathVariable("blogId") int id) {
 			Blog blog = null;
 			blog = blogDAO.getBlog(id);
-			blogDAO.deleteBlog(blog);
+			blog.setStatus("REJECTED");
+			blogDAO.updateBlog(blog);
 			return new ResponseEntity<Blog>(blog, HttpStatus.OK);	
 		}
 		

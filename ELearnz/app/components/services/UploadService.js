@@ -1,8 +1,26 @@
-angular.module('CollaborationApp').service('UploadService',function($q,$http, $rootScope,REST_URI){
+var upload=angular.module('UploadModule',[]);
+
+ upload.directive('fileModel',['$parse',function($parse){
+        return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            console.log(model);
+            var modelSetter = model.assign;
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+upload.service('UploadService',['$http', '$q', '$rootScope', '$routeParams','REST_URI',function($http,$q, $rootScope,$routeParams,REST_URI){
     
     // uploadFile function to upload the image on the server
     this.uploadFile = function (file) {
-
+         console.log("inside service uploadfile method");
         var deferred = $q.defer();
 
         // NOTE: the 'Content-Type' is undefined to add a boundary between the multipart content
@@ -12,7 +30,9 @@ angular.module('CollaborationApp').service('UploadService',function($q,$http, $r
         fd.append('file', file);
         // send the user id which can be used to update the usera
         // and to set the file name
-        fd.append('id', $rootScope.user.id);
+        var user=$rootScope.user;
+        var userId=user.userId;
+        fd.append('id', userId);
         $http.post(REST_URI + '/upload/profile-picture', fd, {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
@@ -29,4 +49,4 @@ angular.module('CollaborationApp').service('UploadService',function($q,$http, $r
         return deferred.promise;
     }
 
-});
+}]);

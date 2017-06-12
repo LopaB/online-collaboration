@@ -1,0 +1,74 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.time.LocalDate;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IJobAppliedDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IJobDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Job;
+import com.coll.OnlineCollaborateBackEnd.model.JobApplied;
+
+public class JobAppliedDAOTestCase {
+
+	private static AnnotationConfigApplicationContext context;
+	private static IJobDAO jobDAO;
+	private static Job job;
+	private static IJobAppliedDAO jobAppliedDAO;
+	private static JobApplied jobApplied;
+
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+		
+		jobDAO=(IJobDAO)context.getBean("jobDAO");
+		job=(Job)context.getBean("job");
+		jobAppliedDAO=(IJobAppliedDAO)context.getBean("jobAppliedDAO");
+		jobApplied=(JobApplied)context.getBean("jobApplied");
+	}
+	
+	/*@Test
+	public void addJobAppliedTest() {
+		jobApplied.setId(1);
+		jobApplied.setUserId(27);
+		jobApplied.setUsername("Veenam");
+		jobApplied.setStatus("PENDING");
+		jobApplied.setAppliedDate(LocalDate.parse("2017-06-07"));
+		job = jobDAO.getJob(2);
+		jobApplied.setJob(job);
+		
+		assertEquals("Successfully applied for a job",true, jobAppliedDAO.addJobApplied(jobApplied));
+		
+	}*/
+	
+	@Test
+	public void updateJobApplied() {
+	
+		jobApplied = jobAppliedDAO.getJobApplied(2);
+		jobApplied.setStatus("APPROVED");
+		jobApplied.setJob(jobDAO.getJob(3));
+		assertEquals(true, jobAppliedDAO.updateJobApplied(jobApplied));
+	}
+	
+	/*@Test
+	public void getAllJobsAppliedTestCase() {
+		
+		int size = jobAppliedDAO.list().size();
+		assertEquals(1, size);
+		
+	}*/
+	
+	/*@Test
+	public void deleteJobApplied() {
+		
+		jobApplied = jobAppliedDAO.getJobApplied(1);
+		assertEquals(true, jobAppliedDAO.deleteJobApplied(jobApplied));
+		
+	}*/
+}

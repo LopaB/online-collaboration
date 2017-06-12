@@ -17,7 +17,8 @@ angular.module('CollaborationApp').controller('RegisterController', function(Reg
         password : '',
         confirmpassword : '',
         email : '',
-        gender : ''
+        gender : '',
+        role:''
     };
 
     //register function
@@ -119,7 +120,7 @@ angular.module('CollaborationApp').controller('RegisterController', function(Reg
      );
 }
  //Method to check whether username already exist
-    self.checkUsername = function () {
+    me.checkUsername = function () {
         debugger;
         var username = me.user.username;
         //If username is undefined and has some characters
@@ -142,7 +143,8 @@ angular.module('CollaborationApp').controller('RegisterController', function(Reg
                 $scope.register.reg_username.$setValidity("reg_username", true)
             }
         );
-        }
+    }
+    }
        
     //view single user function
 me.view=function(){
@@ -158,19 +160,20 @@ me.view=function(){
 }
 
 //view all user function
-me.viewall=function(){
-    RegisterService.viewall().then(
+me.viewAll=function(){
+    console.log("inside regctrl");
+    RegisterService.viewAll().then(
         function(response){
             me.users=response;
             console.log(me.users);
         },
         function (error) {
-                console.log(me.user);
+                console.log(me.users);
             }
     );
 }
 
       
-    }
+    
 
 });

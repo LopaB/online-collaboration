@@ -1,16 +1,15 @@
 
 <div class="container">
-    <div class="row">
+    <div class="row ">
         <div class="col-md-12">
             <div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#!/viewUsers" role="tab" data-target="#view" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> View Users</a></li>
-                        <li><a href="#!/requests/users" role="tab" data-target="#activate" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" ></span> Activate Users</a></li>
-                        <li><a href="#!/requests/blogs" role="tab" data-target="#activateBlog" data-toggle="tab"><span class=""></span> Activate Blog</a></li>
-                        <li><a href="#!/myFriends" role="tab" data-target="#friend" data-toggle="tab"><span class=""></span> My Friends</a></li>
-                        <li><a href="#!/friendRequest" role="tab" data-target="#request" data-toggle="tab"><span class=""></span> Friend Request</a></li>
+                        <li class="active"><a href="#!/viewUsers" role="tab" data-target="#view" data-toggle="tab"><span class="glyphicon glyphicon-eye-open"></span> View Users</a></li>
+                        <li><a href="#!/requests/users" role="tab" data-target="#activate" data-toggle="tab"><span class="glyphicon glyphicon-user" ></span> Activate Users</a></li>
+                        <li><a href="#!/requests/blogs" role="tab" data-target="#activateBlog" data-toggle="tab"><span class="glyphicon glyphicon-bitcoin"></span> Activate Blog</a></li>
+                        
                     </ul>
                 </div>
             <!-- Tab panes -->
@@ -18,30 +17,29 @@
                 <div class="tab-content ">
                     
 
-                <div class="tab-pane active" id="view " ng-init="regCtrl.viewAll()">
-                    <div class=" ">
-                        <div class="row ">
+                <div class="tab-pane active" id="view " >
+                    <div class=" " ng-init="regCtrl.viewAll()">
+                        <div class="row well">
                             <div class="col-md-12 ">
                                 View Users here
-                                    
-                                <div class="well ">
-                                    <ul>
-                                        <li ng-repeat="user in regCtrl.users">
-                                    <div class="media ">
-      	                                
-  		                                <div class="media-body ">
-    		                                <h4 class="media-heading ">{{user.username}}</h4>
-                                            <h3>{{user.fullname}}</h3>
-                                            <p class="text-left ">{{user.role}}</p>
-                                                                                      
-                                            <hr/>
-
-                                           
-                                           
+                                <br />
+                                <hr style="width: 800px;" >   
+                          
+                                <div class="row ">
+                                    <div class="col-md-6" ng-repeat="user in regCtrl.users" style="text-align: center; padding-bottom: 5%; padding-left:5%; padding-right:5%; ">
+                                        <div class="row"  >
+                                            
+                                                <div class="col-md-12" style="border:2px solid #A9A9A9; border-radius: 5px; box-shadow: 5px 5px lightslategray">
+  		                                            <div class=" ">
+    		                                            <h4 class=" ">{{user.username}}</h4>
+                                                        <h3>{{user.fullname}}</h3>
+                                                        <p class=" ">{{user.role}}</p>
+  		                                            </div>
+                                                </div>
                                         </div>
-                                    </div>
-                                        </li>
-                                    </ul>
+                                        </div>
+                                    </div>                 
+                                    
                                 </div>
                                 <!-- end-->
                             </div>
@@ -55,3 +53,4 @@
     </div>
 </div>
     </div></div>
+    

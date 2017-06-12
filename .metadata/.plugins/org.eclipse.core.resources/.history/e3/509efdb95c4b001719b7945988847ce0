@@ -1,0 +1,18 @@
+package com.coll.OnlineCollaborateBackEnd.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.springframework.stereotype.Component;
+
+@Entity
+@Component
+@Table(name="FORUM")
+public class Forum implements Serializable{
+
+	
+	private static final long serialVersionUID = -66889188584225117L;
+
+}

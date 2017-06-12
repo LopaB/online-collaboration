@@ -68,14 +68,6 @@ public class FriendController {
 							return new ResponseEntity<Friend>(HttpStatus.OK);
 						}
 			
-					//Method to check user's friends
-//					@RequestMapping(value = {"/user/friends/check/{id}"}, method = RequestMethod.GET)
-//					public ResponseEntity<List<Friends>> fetchFriends(@PathVariable("id") int userId) {
-//							System.out.println("Fetchng friends");
-//							List<Friends> friends = friendsDAO.list(userId);
-//							
-//							return new ResponseEntity<List<Friends>>(friends, HttpStatus.OK);
-//						}
 					
 					//Method to fetch friendsModel
 					@GetMapping(value = {"/user/friends/model/{id}"})

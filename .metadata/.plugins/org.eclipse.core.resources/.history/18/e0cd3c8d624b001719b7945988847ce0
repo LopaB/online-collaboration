@@ -1,0 +1,79 @@
+package com.coll.OnlineCollaborateBackEnd.implDao;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IForumDAO;
+import com.coll.OnlineCollaborateBackEnd.model.ForumPostDAO;
+
+@Repository("forumPostDAO")
+@Transactional
+public class ForumPostDAOImpl implements IForumPostDAO {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Override
+	public List<ForumPost> list() {
+		String hql = "FROM ForumPosts";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		return query.getResultList();
+	}
+	
+	@Override
+	@Transactional
+	public List<ForumPost> list(int id) {
+		String hql = "FROM ForumPosts where forum = " + id +"";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		return query.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public ForumPost getForumPost(int id) {
+		return sessionFactory.getCurrentSession().get(ForumPost.class, id);
+	}
+
+	@Override
+	@Transactional
+	public boolean addForumPost(ForumPost fp) {
+		try {
+			sessionFactory.getCurrentSession().save(fp);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	@Transactional
+	public boolean updateForumPosts(ForumPosts forumPosts) {
+		try {
+			sessionFactory.getCurrentSession().update(forumPosts);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteForumPosts(ForumPosts forumPosts) {
+		try {
+			sessionFactory.getCurrentSession().delete(forumPosts);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+}

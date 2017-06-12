@@ -1,0 +1,96 @@
+package com.coll.OnlineCollaborateBackEnd.controller;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IJobAppliedDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IJobDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Job;
+import com.coll.OnlineCollaborateBackEnd.model.JobApplied;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+@RestController
+public class JobController {
+	
+	@Autowired
+	IJobDAO jobDAO;
+	
+	@Autowired
+	IUserDAO userDAO;
+	
+	@Autowired
+	IJobAppliedDAO jobAppliedDAO;
+	
+	//creating a new job by admin
+	
+			@PostMapping(value = {"/job/new"})
+			public ResponseEntity<Job> addJob(@RequestBody Job job) {
+				System.out.println("Adding job now");
+				job.setStatus("APPROVED");
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDateTime now = LocalDateTime.now(); 
+				job.setPostDate(LocalDate.parse(dtf.format(now)));
+				jobDAO.addJob(job);
+				
+				return new ResponseEntity<Job>(job, HttpStatus.OK);	
+			}
+			
+			//fetching job list by status
+			@GetMapping(value = {"/job/list/status"})
+			public ResponseEntity<List<Job>> fetchApprovedJobs() {
+				System.out.println("fetching list of jobs by status");
+				List<Job> job = jobDAO.getJobsByStatus("APPROVED");
+				return new ResponseEntity<List<Job>>(job, HttpStatus.OK);
+			}
+			
+			//fetching user's jobs
+			@GetMapping(value = {"/user/jobs/list/{id}"})
+			public ResponseEntity<List<Job>> fetchUsersJobs(@PathVariable("id") int id) {
+				System.out.println("Fetching users jobs");
+				List<Job> job = jobDAO.getUserJobs(id);
+				return new ResponseEntity<List<Job>>(job, HttpStatus.OK);
+			}
+			
+			//Apply for job by user
+			@PostMapping(value = {"/job/apply/{id}"})
+			public ResponseEntity<JobApplied> applyJob(@PathVariable("id") int id, @RequestBody Integer userId) {
+				System.out.println("Applying for job now");
+				Job job = jobDAO.getJob(id);
+				User user = userDAO.getUser(userId);
+				JobApplied jobApplied = new JobApplied();
+				jobApplied.setJob(job);
+				jobApplied.setUserId(userId);
+				jobApplied.setUsername(user.getUsername());
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDateTime now = LocalDateTime.now(); 
+				jobApplied.setAppliedDate(LocalDate.parse(dtf.format(now)));
+				jobApplied.setStatus("APPROVED");
+				jobAppliedDAO.addJobApplied(jobApplied);
+				return new ResponseEntity<JobApplied>(jobApplied, HttpStatus.OK);	
+			}
+			
+			//fetch jobs user has applied for
+			@GetMapping(value = {"/user/jobs/applied/{id}"})
+			public ResponseEntity<List<Job>> fetchJobsApplied(@PathVariable("id") int id) {
+					System.out.println("Fetching jobs user has applied for");
+					List<JobApplied> jobApplieds = jobAppliedDAO.list(id);
+					List<Job> job = new ArrayList<>();
+					for (JobApplied ja : jobApplieds) {
+						job.add(ja.getJob());
+					}
+						return new ResponseEntity<List<Job>>(job, HttpStatus.OK);
+					}
+}

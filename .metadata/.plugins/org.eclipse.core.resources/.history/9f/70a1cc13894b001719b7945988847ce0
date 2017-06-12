@@ -1,0 +1,76 @@
+package com.coll.OnlineCollaborateBackEnd.implDao;
+
+
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IEventJoinedDAO;
+import com.coll.OnlineCollaborateBackEnd.model.EventJoined;
+
+@Repository("eventJoinedDAO")
+@Transactional
+public class EventJoinedDAOImpl implements IEventJoinedDAO{
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Override
+	
+	public List<EventJoined> list() {
+			String hql = "FROM EventJoined";
+			Query query = sessionFactory.getCurrentSession().createQuery(hql);
+			return query.getResultList();
+	}
+	
+	@Override
+	public List<EventJoined> list(int id) {
+		String hql = "FROM EventJoined where userId = '" + id +"'";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		return query.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public EventJoined getEventJoined(int id) {
+		return sessionFactory.getCurrentSession().get(EventJoined.class, id);
+	}
+
+	@Override
+	public boolean addEventJoined(EventJoined eventJoined) {
+		try {
+			sessionFactory.getCurrentSession().save(eventJoined);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateEventJoined(EventJoined eventJoined) {
+		try {
+			sessionFactory.getCurrentSession().update(eventJoined);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteEventJoined(EventJoined eventJoined) {
+		try {
+			sessionFactory.getCurrentSession().delete(eventJoined);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+}

@@ -28,8 +28,8 @@ public class ImageUploadController {
 	private String imageBasePath;
 	
 	@PostMapping("/upload/profile-picture")
-	public ResponseEntity<Response> uploadProfilePicture(@RequestParam("file") MultipartFile file, @RequestParam("id") int id) {
-		
+	public ResponseEntity<Response> uploadProfilePicture(@RequestParam("file") MultipartFile file, @RequestParam("id") Integer id) {
+		System.out.println("Uploading started");
 		String message = null;
 
 		// We would be using the USER_PROFILE as a prefix so that we can use other prefix 

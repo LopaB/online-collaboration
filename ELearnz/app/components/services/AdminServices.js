@@ -68,7 +68,7 @@ angular.module('CollaborationApp').service('AdminService',function($http,$q,REST
         this.updateBlog=function(blog) {
             var deferred = $q.defer();
             
-            $http.post(REST_URI + '/blog/update' + blog)
+            $http.post(REST_URI + '/blog/update' , blog)
                 .then (
                     function(response) {
                         deferred.resolve(response.data);
@@ -79,4 +79,121 @@ angular.module('CollaborationApp').service('AdminService',function($http,$q,REST
                 );
                 return deferred.promise;
         }
+
+         //Function to fetch approved job list
+        this.manageJobs=function() {
+            var deferred = $q.defer();
+            
+            $http.get(REST_URI + '/job/manage/list')
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+         //Function tochange user role
+        this.changeUserRole=function(user) {
+            var deferred = $q.defer();
+            
+            $http.post(REST_URI + '/user/role/manage',user)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+        //Function to fetch approved event list
+        this.fetchEventList=function() {
+            var deferred = $q.defer();
+            
+            $http.get(REST_URI + '/event/manage/list')
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+         //delete blogs
+        this.deleteEvent=function(id) {
+            var deferred = $q.defer();
+            
+            $http.post(REST_URI + '/event/delete/' + id)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+         //delete blogs
+        this.updateEvent=function(event) {
+            var deferred = $q.defer();
+            
+            $http.post(REST_URI + '/event/update' , event)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+         //Function to fetch approved job list
+        this.manageForums=function() {
+            var deferred = $q.defer();
+            
+            $http.get(REST_URI + '/forum/manage/list')
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
+        
+        
+         //delete job
+        this.deleteJob=function(id) {
+            var deferred = $q.defer();
+            
+            $http.post(REST_URI + '/job/delete/' + id)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+       
+
+
 });

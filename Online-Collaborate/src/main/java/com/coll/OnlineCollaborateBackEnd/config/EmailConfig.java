@@ -16,7 +16,7 @@ public class EmailConfig {
 	public JavaMailSender getMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();						
 		mailSender.setHost("smtp.gmail.com");
-		mailSender.setPort(587);
+		mailSender.setPort(587);//Port for TLS/STARTTLS: 587, Port for SSL: 465
 		mailSender.setUsername("pinkfriend@gmail.com");
 		mailSender.setPassword("idontknowthepassword");
 		mailSender.setJavaMailProperties(getMailProperties());				
@@ -25,10 +25,10 @@ public class EmailConfig {
 
 	private Properties getMailProperties() {
 		Properties mailProperties = new Properties();		
-		mailProperties.put("mail.transport.protocol", "smtp");
-		mailProperties.put("mail.smtp.auth", "true");
-		mailProperties.put("mail.smtp.starttls.enable", "true");
-		mailProperties.put("mail.debug", "true");
+		mailProperties.put("mail.transport.protocol", "smtp");//simple mail transfer protocol. in Transport layer security not in SSL
+		mailProperties.put("mail.smtp.auth", "true");//send mail in javax.mail with authentication
+		mailProperties.put("mail.smtp.starttls.enable", "true");//for safe mail sending from java
+		mailProperties.put("mail.debug", "true");//to print on the tomcat server
 		return mailProperties;
 	}		
 }

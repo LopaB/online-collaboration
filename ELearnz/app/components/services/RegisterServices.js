@@ -1,4 +1,4 @@
-angular.module('CollaborationApp').service('RegisterService',function($http,$q,$cookies,$rootScope,REST_URI){
+angular.module('CollaborationApp').service('RegisterService',function($http,$q,$cookies,$rootScope,$location,REST_URI){
 
 var userIsAuthenticated = false;
 var role = 'USER';    
@@ -74,6 +74,7 @@ this.register=function(user){
        
         $http.post(REST_URI+'/user/login',user).then(
             function(response){
+                console.log(response);
                 deferred.resolve(response.data);
                 $cookies.putObject('user',user);
                 role = user.role;
@@ -152,8 +153,9 @@ this.register=function(user){
 
     //view all users
    this.viewAll = function () {
+       console.log("inside regserv");
         var deferred = $q.defer();
-        $http.get(REST_URI + '/user/view').then(
+        $http.get(REST_URI + '/user/list').then(
             function (response) {
                 deferred.resolve(response.data);
                 console.log(response);

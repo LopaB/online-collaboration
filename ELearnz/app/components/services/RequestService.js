@@ -63,4 +63,37 @@ angular.module('CollaborationApp').service('RequestService',function($http,$q,RE
                 );
                 return deferred.promise;
         }
+
+        //Function to fetch forum join request with pending status
+            this.fetchForumRequests=function() {
+
+                var deferred = $q.defer();
+                $http.get(REST_URI + '/forum/request/list')
+                    .then (
+                        function(response) {
+                            deferred.resolve(response.data);
+                        },
+                        function(errResponse) {
+                            deferred.reject(errResponse);
+                        }
+                    );
+                    return deferred.promise;
+            }
+
+        //Function to change status pending forum request
+        this.changeFRStatus=function(id) {
+            var deferred = $q.defer();
+            
+            $http.post(REST_URI + '/forum/request/approval/' + id)
+                .then (
+                    function(response) {
+                        deferred.resolve(response.data);
+                    },
+                    function(errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+                return deferred.promise;
+        }
+
 });

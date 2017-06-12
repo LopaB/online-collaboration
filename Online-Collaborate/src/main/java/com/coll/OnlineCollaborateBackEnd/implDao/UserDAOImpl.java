@@ -109,7 +109,7 @@ public class UserDAOImpl implements IUserDAO{
 
 	@Override
 	public boolean updateUserProfile(String fileName, Integer id) {
-		String updateQuery = "UPDATE User SET profile = :fileName WHERE id = :id";
+		String updateQuery = "UPDATE UserDetail SET profile = :fileName WHERE userId = :id";
 		Query query = sessionFactory.getCurrentSession().createQuery(updateQuery);
 		query.setParameter("id", (Integer)id);
 		query.setParameter("fileName", fileName);

@@ -1,0 +1,6 @@
+package com.coll.OnlineCollaborateBackEnd.implDao;
+
+@Repository("forumPostDAO")
+public class ForumPostDAOImpl {
+
+}

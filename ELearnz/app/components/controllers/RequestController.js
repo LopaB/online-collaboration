@@ -7,6 +7,8 @@ angular.module('CollaborationApp').controller('RequestController',function(Reque
     //For list of pending blogs
     me.pendingBlogs = [];
 
+     me.forumRequest = [];
+
     //Function to view list of all pending users
         me.pendingUserList = function() {
 
@@ -65,12 +67,40 @@ angular.module('CollaborationApp').controller('RequestController',function(Reque
                 function(blog) {
                     $route.reload();
                     
-                    pendingBlogList();
+                    me.pendingBlogList();
                      
                 },
                 function(errResponse) {
                 }
             );
+    }
+
+    
+            //Function to fetch forum requests
+            me.fetchForumRequests = function() {
+                
+                RequestService.fetchForumRequests()
+                    .then (
+                        function(forumRequests) {
+                           me.forumRequest = forumRequests;
+                        },
+                        function(errResponse) {
+                        }
+                    );
+
+            }
+
+            //Function to change status of forumRequests
+            me.changeFRStatus = function(id) {
+                
+                RequestService.changeFRStatus(id)
+                    .then (
+                        function(forumRequest) {
+                            $route.reload();
+                        },
+                        function(errResponse) {
+                        }
+                    );
     }
 
 });

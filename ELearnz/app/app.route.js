@@ -55,7 +55,7 @@ window.routes={
         controller: 'RegisterController',
         controllerAs: 'regCtrl',
         requiredLogin:true,
-        roles:['USER','ADMIN']
+        roles:['ADMIN']
 
     },
      //For accepting requests of user
@@ -95,7 +95,7 @@ window.routes={
         controller: 'BlogController',
         controllerAs: 'blogCtrl',
         requiredLogin:true,
-        roles:['USER']
+        roles:['USER','ADMIN']
 
     },
     "/blog/:blogId":{
@@ -111,7 +111,7 @@ window.routes={
         controller: 'AdminController',
         controllerAs: 'adminCtrl',
         requiredLogin:true,
-        roles:['ADMIN','USER']
+        roles:['ADMIN']
 
     },
     //For viewing list of all site's members
@@ -157,11 +157,109 @@ window.routes={
     
     "/edit/profile": {
         templateUrl: 'app/components/views/editProfile.html', 
-        controller: 'RegisterController', 
-        controllerAs: 'regCtrl',
+        controller: 'UploadController', 
+        controllerAs: 'uploadCtrl',
         requireLogin: true,
         roles: ['USER','ADMIN']
-    }
+    },
+     "/userProfile": {
+        templateUrl: 'app/components/views/userProfile.html', 
+        controller: 'UserController', 
+        controllerAs: 'userCtrl',
+        requireLogin: true,
+        roles: ['USER','ADMIN']
+    },
+    //Form for creating new event
+    "/event/new": {
+        templateUrl : 'app/components/views/newEvent.html',
+        controller : 'EventController',
+        controllerAs : 'eventCtrl',
+        requireLogin: true,
+        roles: ['Super_Admin', 'ADMIN']
+    },
+
+    //For viewing event list
+    "/events/list": {
+        templateUrl : 'app/components/views/eventlist.html',
+        controller : 'EventController',
+        controllerAs : 'eventCtrl',
+        requireLogin: true,
+        roles: ['USER', 'Super_Admin', 'ADMIN']
+    },
+
+    //For updating and deleting event
+     "/manage/events": {
+        templateUrl : 'app/components/views/manageEvent.html',
+        controller : 'AdminController',
+        controllerAs : 'adminCtrl',
+        requireLogin: true,
+        roles: ['Super_Admin', 'ADMIN']
+    },
+
+    //Form for creating new job
+    "/job/new": {
+        templateUrl : 'app/components/views/newJob.html',
+        controller : 'JobController',
+        controllerAs : 'jobCtrl',
+        requireLogin: true,
+        roles: ['Super_Admin', 'ADMIN']
+    },
+
+    //For viewing job list
+    "/jobs/list": {
+        templateUrl : 'app/components/views/joblist.html',
+        controller : 'JobController',
+        controllerAs : 'jobCtrl',
+        requireLogin: true,
+        roles: ['USER', 'Super_Admin', 'ADMIN']
+    },
+
+    //For updating and deleting jobs
+     "/manage/jobs": {
+        templateUrl : 'app/components/views/manageJob.html',
+        controller : 'AdminController',
+        controllerAs : 'adminCtrl',
+        requireLogin: true,
+        roles: ['Super_Admin', 'ADMIN']
+    },
+
+     //For viewing list of forums and adding a new one
+     "/forum/list": {
+        templateUrl : 'app/components/views/forumlist.html',
+        controller : 'ForumController',
+        controllerAs : 'forumCtrl',
+        requireLogin: true,
+        roles: ['USER', 'ADMIN']
+    },
+
+    //For viewing single forum topic
+    "/forum/:id": {
+        templateUrl : 'app/components/views/forum.html',
+        controller : 'ForumController',
+        controllerAs : 'forumCtrl',
+        requireLogin: true,
+        roles: ['USER', 'ADMIN']
+    },
+
+    //For viewing single forum topic
+    "/manage/forums": {
+        templateUrl : 'app/components/views/manageForum.html',
+        controller : 'ForumController',
+        controllerAs : 'forumCtrl',
+        requireLogin: true,
+        roles: ['Super_Admin', 'ADMIN']
+    },
+
+    //For viewing single forum topic
+    "/requests/forums": {
+        templateUrl : 'app/components/views/forumRequest.html',
+        controller : 'RequestController',
+        controllerAs : 'requestCtrl',
+        requireLogin: true,
+        roles: ['Super_Admin', 'ADMIN']
+    },
+
+
 };
 
 
@@ -191,18 +289,3 @@ app.run(function($rootScope,$location,RegisterService) {
    
 });
 
- app.directive('fileModel',['$parse',function($parse){
-        return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            console.log(model);
-            var modelSetter = model.assign;
-            element.bind('change', function () {
-                scope.$apply(function () {
-                    modelSetter(scope, element[0].files[0]);
-                });
-            });
-        }
-    };
-    }]);

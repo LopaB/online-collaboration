@@ -1,0 +1,5 @@
+package com.coll.OnlineCollaborateBackEnd.model;
+
+public class ForumModel {
+
+}

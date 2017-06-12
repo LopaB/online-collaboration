@@ -1,0 +1,145 @@
+package com.coll.OnlineCollaborateBackEnd.controller;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.coll.OnlineCollaborateBackEnd.dao.IForumDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IForumPostDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IForumRequestDAO;
+import com.coll.OnlineCollaborateBackEnd.dao.IUserDAO;
+import com.coll.OnlineCollaborateBackEnd.model.Forum;
+import com.coll.OnlineCollaborateBackEnd.model.ForumModel;
+import com.coll.OnlineCollaborateBackEnd.model.ForumPost;
+import com.coll.OnlineCollaborateBackEnd.model.ForumRequest;
+import com.coll.OnlineCollaborateBackEnd.model.User;
+
+@RestController
+public class ForumController {
+	
+	@Autowired
+	IForumDAO forumDAO;
+	
+	@Autowired
+	IUserDAO userDAO;
+	
+	@Autowired
+	Forum forum;
+	
+	@Autowired
+	IForumPostDAO forumPostDAO;
+	
+	@Autowired
+	IForumRequestDAO forumRequestDAO;
+	
+	//Method for creating new forum category
+		@PostMapping(value = {"/forum/new"})
+		public ResponseEntity<Forum> addForumCategory(@RequestBody Forum forum) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDateTime now = LocalDateTime.now(); 
+			forum.setPostDate(LocalDate.parse(dtf.format(now)));
+			forum.setStatus("APPROVED");
+			forum.setNoOfPosts(0);
+			User user = null;	//creating instance of user
+			int id = forum.getUserId();	//retrieving user id from forum
+			user = userDAO.getUser(id);	//fetching user detail by its id
+			forumDAO.addForum(forum);
+			int forumId = forum.getId();
+			ForumRequest fr = new ForumRequest();
+			fr.setUserId(id);
+			fr.setUsername(user.getUsername());
+			fr.setStatus("APPROVED");
+			fr.setForum(forum);
+			forumRequestDAO.addForumRequest(fr);
+			
+			return new ResponseEntity<Forum>(forum, HttpStatus.OK);
+		}
+		
+		//Method for fetching list of all forum categories
+		@GetMapping(value = {"/forum/list"})
+		public ResponseEntity<List<Forum>> fetchForums() {
+			System.out.println("Method called");
+			List<Forum> forums = forumDAO.list();
+			return new ResponseEntity<List<Forum>>(forums, HttpStatus.OK);
+		}
+		
+		
+		//Method for viewing single forum using forum id as a parameter
+		
+		@GetMapping(value = {"/forum/{id}"})
+		public ResponseEntity<ForumModel> viewForum(@PathVariable("id") int id) {
+			System.out.println("Calling method");
+			ForumModel forumModel = new ForumModel();
+			Forum forum = forumDAO.getForum(id);
+			User user = userDAO.getUser(forum.getUserId());
+			forumModel.setForum(forum);
+			forumModel.setUser(user);
+			return new ResponseEntity<ForumModel>(forumModel, HttpStatus.OK);
+				
+			}
+		
+		@PostMapping(value = {"/forum/post/new/{id}"})
+		public ResponseEntity<ForumPost> addForumPost(@PathVariable("id") int id, @RequestBody ForumPost forumPost) {
+			System.out.println("Adding forum post now");
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDateTime now = LocalDateTime.now(); 
+			forumPost.setPostDate(LocalDate.parse(dtf.format(now)));
+			forum = forumDAO.getForum(id);
+			forum.setNoOfPosts(forum.getNoOfPosts() + 1);
+			forumDAO.updateForum(forum);
+			forumPost.setForum(forum);
+			forumPost.setUserProfileId(userDAO.getUser(forumPost.getUserId()).getProfile());
+			forumPostDAO.addForumPost(forumPost);
+			
+			return new ResponseEntity<ForumPost>(forumPost, HttpStatus.OK);	
+		}
+		
+		 //Function to fetch forum post list
+		 @GetMapping(value = {"/forum/posts/list/{id}"})
+		 public ResponseEntity<List<ForumPost>> fetchForumPost(@PathVariable("id") int id) {
+				System.out.println("fetching list of forum posts now");
+				List<ForumPost> forumPost = forumPostDAO.list(id);
+				return new ResponseEntity<List<ForumPost>>(forumPost, HttpStatus.OK);
+		}
+		 
+		 @PostMapping(value = {"/forum/delete/{id}"})
+			public ResponseEntity<Forum> deleteForum(@PathVariable("id") int id) {
+				Forum forum= forumDAO.getForum(id);
+				List<ForumPost> fp=forumPostDAO.list(id);
+				List<ForumRequest> fr=forumRequestDAO.list(id);
+				System.out.println("Deleting all records related selected forum now");
+				for(ForumPost p : fp){
+					forumPostDAO.deleteForumPost(p);
+				}
+				for(ForumRequest p : fr){
+					forumRequestDAO.deleteForumRequest(p);
+				}
+				forumDAO.deleteForum(forum);
+				
+				return new ResponseEntity<Forum>(forum, HttpStatus.OK);		
+			}
+		 
+		 @PostMapping(value="/forum/update")
+			public ResponseEntity<Forum> updateForum(@RequestBody Forum forum){
+				
+				if(forumDAO.updateForum(forum)) {
+					System.out.println(forum);
+					//forum.setResponseMessage("You have successfully posted data to the server");
+					return new ResponseEntity<Forum>(forum,HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<Forum>(HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+
+}

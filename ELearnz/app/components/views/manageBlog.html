@@ -6,10 +6,10 @@
                 <div class="panel-heading">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li><a href="#!/blog" role="tab" data-target="#view" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> View Blog</a></li>
+                        <li><a href="#!/blog" role="tab" data-target="#view" data-toggle="tab"><span class="glyphicon glyphicon-eye-open"></span> View Blog</a></li>
                         <li><a href="#!/myblog" role="tab" data-target="#myblog" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" ></span> My Blog</a></li>
                         <li ><a href="#!/createblog" role="tab" data-target="#create" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Create Blog</a></li>
-                        <li  class="active"><a href="#!/manageblog" role="tab" data-target="#manage" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Manage Blog</a></li>
+                        <li  class="active"><a href="#!/manageblog" role="tab" data-target="#manage" data-toggle="tab"  ng-if="user.role=='ADMIN'"><span class="glyphicon glyphicon-wrench"></span> Manage Blog</a></li>
                     </ul>
                 </div>
             <!-- Tab panes -->
@@ -37,13 +37,12 @@
 
                                     <tbody>
                                         <tr ng-repeat="blog in adminCtrl.approvedBlogList">
-                                            <td>{{blog.id}}</td>
+                                            <td>{{blog.blogId}}</td>
                                             <td><a href="#!/blog/{{blog.blogId}}" target="_blank">{{blog.blogTitle}}</a></td>
                                             <td>{{blog.username}}</td>
                                             <td>{{blog.blogPosted | date: 'MMMM d, y'}}</td>
                                         <td> 
-                                                <a class="btn btn-lg tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit" ng-click="" ><i class="fa fa-pencil-square-o fa" aria-hidden="true"> edit</i></a>
-                                                <a class="btn btn-lg tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete" ng-click="adminCtrl.deleteBlog(blog.blogId)"><i class="fa fa-close fa" aria-hidden="true"> delete</i></a>
+                                                <a class="btn btn-lg tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete" ng-click="adminCtrl.deleteBlog(blog.blogId)"><i class="fa fa-close fa" aria-hidden="true"> reject</i></a>
                                             </td>
                                         </tr>
                                     </tbody>

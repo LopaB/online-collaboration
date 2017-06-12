@@ -1,5 +1,0 @@
-package com.coll.OnlineCollaborateBackEnd.dao;
-
-public interface IBlogCommentsDAO {
-
-}

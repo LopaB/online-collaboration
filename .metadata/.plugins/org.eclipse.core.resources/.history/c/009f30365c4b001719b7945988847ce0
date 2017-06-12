@@ -1,0 +1,31 @@
+package com.coll.OnlineCollaborateBackEnd.model;
+
+import java.io.Serializable;
+
+@Entity
+@Component
+@Table(name="Event_Joined")
+public class EventJoined implements Serializable{
+	
+	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="generator")
+	@SequenceGenerator(name="generator", sequenceName="EVENT_JOINED_SEQ ", allocationSize = 1)
+	@Column(name="Joined_ID")
+	private int id;
+	
+	@ManyToOne
+	@JoinColumn(name="Event_Id")
+	@JsonBackReference
+	private Events events;
+	
+	@Column(name="User_Id")
+	private int userId;
+	
+	@Column(name="User_Name")
+	private String username;
+	
+	@Column(name="Joined_Date")
+	private LocalDate joinedDate;
+	
+	private String status;
+
+}

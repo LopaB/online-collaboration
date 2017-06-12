@@ -1,0 +1,17 @@
+package com.coll.OnlineCollaborateBackEnd.test;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class EventsDAOTestCase {
+	private static AnnotationConfigApplicationContext context;
+	
+	@BeforeClass
+	public static void init(){
+		context=new AnnotationConfigApplicationContext();
+		context.scan("com.coll.OnlineCollaborateBackEnd");
+		context.refresh();
+	}
+}
